@@ -1,84 +1,41 @@
 <template>
   <div class="corpo">
-    <h1 class="centralizado">{{ titulo }}</h1>
+    <meu-menu :rotas="routes"/>   
+    <transition name="pagina">
 
-    <input
-      type="search"
-      class="filtro"
-      @input="filtro = $event.target.value"
-      placeholder="filtre o seu titulo!"
-    />
-
-    <ul class="lista-fotos">
-      <li
-        class="lista-fotos-item"
-        v-for="foto in fotosComFiltro"
-        :key="foto.titulo"
-      >
-        <new-painel :titulo="foto.titulo">
-          <imagem-responsiva :url="foto.url" :titulo="foto.titulo" />
-        </new-painel>
-      </li>
-    </ul>
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
-import newPainel from "./components/shared/painel/newPainel.vue";
-import ImagemResponsiva from "./components/shared/imagem-responsiva/ImagemResponsiva.vue";
-
+import { routes } from './routes';
+import meuMenu from './components/shared/menu/meuMenu.vue';
 export default {
-  components: {
-    newPainel,
-    ImagemResponsiva,
-  },
-
+  components: { meuMenu },
   data() {
-    return {
-      titulo: "Alurapic",
-      fotos: [],
-      filtro: "",
-    };
-  },
-
-  computed: {
-    fotosComFiltro() {
-      if (this.filtro) {
-        let exp = new RegExp(this.filtro.trim(), "i");
-        return this.fotos.filter((foto) => exp.test(foto.titulo));
-      } else {
-        return this.fotos;
+      return{
+          routes
       }
-    },
-  },
-
-  created() {
-    let promise = this.$http.get("http://localhost:3000/v1/fotos");
-    promise.then((res) => res.json()).then((fotos) => (this.fotos = fotos));
-  },
-};
+  }
+  };
 </script>
 
-<style>
+
+<style scoped>
 .corpo {
   font-family: Helvetica, sans-serif;
   width: 96%;
   margin: 0 auto;
 }
 
-.centralizado {
-  text-align: center;
+.pagina-enter,
+.pagina-leave-active {
+  opacity: 0;
 }
 
-.lista-fotos {
-  list-style: none;
-}
-
-.lista-fotos .lista-fotos-item {
-  display: inline-block;
-}
-.filtro {
-  display: block;
-  width: 100%;
+.pagina-enter-active,
+.pagina-leave-active {
+  transition: opacity 0.3s;
 }
 </style>
