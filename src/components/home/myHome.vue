@@ -15,8 +15,8 @@
         v-for="foto in fotosComFiltro"
         :key="foto.titulo"
       >
-        <new-painel :titulo="foto.titulo">
-          <imagem-responsiva :url="foto.url" :titulo="foto.titulo" />
+        <new-painel v-meu-transform :titulo="foto.titulo">
+          <imagem-responsiva  :url="foto.url" :titulo="foto.titulo" />
           <meu-btn
             rotulo="remover"
             tipo="button"
