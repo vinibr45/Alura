@@ -17,6 +17,13 @@
       >
         <new-painel :titulo="foto.titulo">
           <imagem-responsiva :url="foto.url" :titulo="foto.titulo" />
+          <meu-btn
+            rotulo="remover"
+            tipo="button"
+            @botaoAtivado="remove(foto)"
+            :confirmacao="true"
+            estilo="perigo"
+          />
         </new-painel>
       </li>
     </ul>
@@ -26,11 +33,12 @@
 <script>
 import newPainel from "../shared/painel/newPainel.vue";
 import ImagemResponsiva from "../shared/imagem-responsiva/ImagemResponsiva.vue";
-
+import meuBtn from "../shared/botao/meuBtn.vue";
 export default {
   components: {
     newPainel,
     ImagemResponsiva,
+    meuBtn,
   },
 
   data() {
@@ -40,7 +48,11 @@ export default {
       filtro: "",
     };
   },
-
+  methods: {
+    remove(foto) {
+      alert("Remover a foto!" + foto.titulo);
+    },
+  },
   computed: {
     fotosComFiltro() {
       if (this.filtro) {
