@@ -15,8 +15,12 @@
         v-for="foto in fotosComFiltro"
         :key="foto.titulo"
       >
-        <new-painel v-meu-transform :titulo="foto.titulo">
-          <imagem-responsiva  :url="foto.url" :titulo="foto.titulo" />
+        <new-painel :titulo="foto.titulo">
+          <imagem-responsiva
+            :url="foto.url"
+            :titulo="foto.titulo"
+            v-meu-transform:scale.animate="1.2"
+          />
           <meu-btn
             rotulo="remover"
             tipo="button"
@@ -34,11 +38,15 @@
 import newPainel from "../shared/painel/newPainel.vue";
 import ImagemResponsiva from "../shared/imagem-responsiva/ImagemResponsiva.vue";
 import meuBtn from "../shared/botao/meuBtn.vue";
+import transform from "../../directives/Transform.js";
 export default {
   components: {
     newPainel,
     ImagemResponsiva,
     meuBtn,
+  },
+  directives: {
+    transform
   },
 
   data() {
